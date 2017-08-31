@@ -1,0 +1,23 @@
+{
+  "author": {
+    "name": "cordova-plugin-audio-amr-wav"
+  },
+  "bugs": {
+    "url": "https://github.com/hackpar/cordova-plugin-audio-amr-wav-test.git"
+  },
+  "dependencies": {},
+  "description": "cordova-plugin-audio-amr-wav",
+  "devDependencies": {},
+  "homepage": "https://github.com/hackpar/cordova-plugin-audio-amr-wav-test.git",
+  "license": "MIT",
+  "name": "cordova-plugin-audio-amr-wav",
+  "optionalDependencies": {},
+  "readme": "",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hackpar/cordova-plugin-audio-amr-wav-test.git"
+  },
+  "scripts": {},
+  "version": "1.0.0"
+}
