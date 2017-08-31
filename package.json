@@ -15,6 +15,5 @@
     "url": "git+https://github.com/hackpar/cordova-plugin-audio-amr-wav-test.git"
   },
   "scripts": {},
-  "version": "1.0.4",
-  "main": "index.js"
+  "version": "1.0.4"
 }
