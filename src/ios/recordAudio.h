@@ -11,7 +11,6 @@
 #import "VoiceConverter.h"
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
-#import "operatePlist.h"
 
 @interface recordAudio : CDVPlugin
 
