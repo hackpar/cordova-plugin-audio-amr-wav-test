@@ -21,7 +21,7 @@
     CDVPluginResult *pluginResult;
     
     operatePlist *readPlist = [[operatePlist alloc] init];
-    //generateIDCode *idcode = [[generateIDCode alloc] init];
+    generateIDCode *idcode = [[generateIDCode alloc] init];
     NSString *userID = [[NSString alloc] init];
     
     if (self.recorder.isRecording) {
@@ -36,7 +36,7 @@
         }
         else {
             userID = [[readPlist read:@"userinfo"] objectForKey:@"user_id"];
-            self.recordFileName = ["LY" withUserID:userID withDevID:@"" withNumber:0];
+            self.recordFileName = [idcode idCode:@"LY" withUserID:userID withDevID:@"" withNumber:0];
         }
         //获取路径
         self.recordFilePath = [self GetPathByFileName:self.recordFileName ofType:@"wav"];
