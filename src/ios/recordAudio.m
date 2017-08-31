@@ -218,9 +218,12 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackID];
 }
 
+- (void)stopAudio:(CDVInvokedUrlCommand *)command {
+    [self.player stop];
+}
 - (void)convertToAmr:(CDVInvokedUrlCommand *)command {
     NSLog(@"begin to convert audio to amr");
-    
+
     NSString *callbackID = [command callbackId];
     NSString *errorStr = [[NSString alloc] init];
     NSFileManager *file = [NSFileManager defaultManager];
@@ -233,7 +236,7 @@
     NSString *fullPath;
     NSString *duration;
     NSString *voiceID;
-    
+
     if ([[[command arguments] objectAtIndex:0] isKindOfClass:[NSString class]]) {
         fileURL = [[NSMutableString alloc] initWithString:[[command arguments] objectAtIndex:0]];
         NSRange amrRange = [fileURL rangeOfString:@"wav"];
@@ -251,7 +254,7 @@
                 NSLog(@"fullPath: %@", fullPath);
                 NSLog(@"duration: %@", duration);
                 NSLog(@"voiceID: %@", voiceID);
-                
+
                 [audioParam setObject:fullPath forKey:@"fullPath"];
                 [audioParam setObject:duration forKey:@"duration"];
                 [audioParam setObject:voiceID forKey:@"voiceID"];
@@ -264,7 +267,7 @@
     } else {
         errorStr = @"audio URL must be a string variable!";
     }
-    
+
     if (errorStr.length != 0) {
         NSLog(@"errorStr: %@", errorStr);
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
@@ -274,13 +277,13 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                      messageAsDictionary:audioParam];
     }
-    
+
     [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackID];
 }
 
 - (void)convertToWav:(CDVInvokedUrlCommand *)command {
     NSLog(@"begin to convert audio to wav");
-    
+
     NSString *callbackID = [command callbackId];
     NSString *errorStr = [[NSString alloc] init];
     NSFileManager *file = [NSFileManager defaultManager];
@@ -293,7 +296,7 @@
     NSString *fullPath;
     NSString *duration;
     NSString *voiceID;
-    
+
     if ([[[command arguments] objectAtIndex:0] isKindOfClass:[NSString class]]) {
         fileURL = [[NSMutableString alloc] initWithString:[[command arguments] objectAtIndex:0]];
         NSRange amrRange = [fileURL rangeOfString:@"amr"];
@@ -311,7 +314,7 @@
                 NSLog(@"fullPath: %@", fullPath);
                 NSLog(@"duration: %@", duration);
                 NSLog(@"voiceID: %@", voiceID);
-                
+
                 [audioParam setObject:fullPath forKey:@"fullPath"];
                 [audioParam setObject:duration forKey:@"duration"];
                 [audioParam setObject:voiceID forKey:@"voiceID"];
@@ -324,7 +327,7 @@
     } else {
         errorStr = @"audio URL must be a string variable!";
     }
-    
+
     if (errorStr.length != 0) {
         NSLog(@"errorStr: %@", errorStr);
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
@@ -334,13 +337,13 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                      messageAsDictionary:audioParam];
     }
-    
+
     [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackID];
 }
 
 - (void)deleteAudio:(CDVInvokedUrlCommand *)command {
     NSLog(@"begin to delete audio file!");
-    
+
     NSString *callbackID = [command callbackId];
     NSString *errorStr = [[NSString alloc] init];
     NSFileManager * file = [NSFileManager defaultManager];
@@ -348,7 +351,7 @@
     NSMutableString *fileURL;
     CDVPluginResult *pluginResult;
     NSError * error;
-    
+
     fileURL = [[NSMutableString alloc] initWithString:[[command arguments] objectAtIndex:0]];
     NSRange amrRange = [fileURL rangeOfString:@"amr"];
     NSRange wavRange = [fileURL rangeOfString:@"wav"];
@@ -375,7 +378,7 @@
     } else {
         errorStr = @"file URL is wrong!";
     }
-    
+
     if (errorStr.length != 0) {
         NSLog(@"errorStr: %@", errorStr);
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorStr];
@@ -387,7 +390,7 @@
         NSLog(@"delete audio is OK!");
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     }
-    
+
     [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackID];
 }
 
@@ -402,16 +405,16 @@
 - (NSString *)GetPathByFileName:(NSString *)fileName ofType:(NSString *)type {
     NSFileManager *filePath = [NSFileManager defaultManager];
     NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0];
-    
+
     directory = [directory stringByAppendingString:@"/audio"];
-    
+
     if (![filePath fileExistsAtPath:directory]) {
         [filePath createDirectoryAtPath:directory
             withIntermediateDirectories:YES
                              attributes:nil
                                   error:nil];
     }
-    
+
     NSString *filePathStr = [[[directory stringByAppendingPathComponent:fileName]
                               stringByAppendingPathExtension:type]
                              stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -423,21 +426,21 @@
     NSFileManager *filemanager = [[NSFileManager alloc] init];
     NSMutableDictionary *attributes;
     NSString *duration;
-    
+
     if ([filemanager fileExistsAtPath:filePath]) {
         attributes = [[NSMutableDictionary alloc] initWithDictionary:[filemanager attributesOfItemAtPath:filePath error:nil]];
     }
-    
+
     NSRange range = [filePath rangeOfString:@"wav"];
     if (range.length > 0) {
         AVAudioPlayer *play = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL URLWithString:filePath] error:nil];
         duration = [[NSString alloc] initWithFormat:@"%d", (int)play.duration];
     }
-    
+
     [attributes setObject:duration forKey:@"duration"];
-    
+
     NSLog(@"%@", attributes);
-    
+
     return attributes;
 }
 @end

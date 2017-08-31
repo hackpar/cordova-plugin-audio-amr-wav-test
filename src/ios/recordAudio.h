@@ -18,6 +18,7 @@
 - (void)startRecord:(CDVInvokedUrlCommand*)command;
 - (void)stopRecord:(CDVInvokedUrlCommand*)command;
 - (void)playAudio:(CDVInvokedUrlCommand*)command;
+- (void)stopAudio:(CDVInvokedUrlCommand*)command;
 
 - (void)convertToAmr:(CDVInvokedUrlCommand*)command;
 - (void)convertToWav:(CDVInvokedUrlCommand*)command;
